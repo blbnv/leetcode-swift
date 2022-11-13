@@ -1,0 +1,31 @@
+/// https://leetcode.com/problems/combination-sum/
+
+class Solution {
+    func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+        var result = [[Int]]()
+        var candidate = [Int]()
+        self.backtrack(&result, &candidate, candidates.sorted(), target, 0)
+        return result
+    }
+    
+    func backtrack(_ result: inout [[Int]], 
+                   _ candidate: inout [Int], 
+                   _ all: [Int], 
+                   _ target: Int, 
+                   _ index: Int) 
+    {
+        if target < 0 { 
+            return 
+        }
+        
+        if target == 0 {
+            result.append(candidate)
+        }
+        
+        for i in index..<all.count {
+            candidate.append(all[i])
+            self.backtrack(&result, &candidate, all, target - all[i], i)
+            candidate.removeLast()
+        }
+    }
+}
